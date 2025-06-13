@@ -41,9 +41,7 @@ You are responsible for the cost of the AWS services used while running this Gui
 
 We recommend creating a [Budget](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) through [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this Guidance._
 
-### Sample Cost Table ( required )
 
-**Note : Once you have created a sample cost table using AWS Pricing Calculator, copy the cost breakdown to below table and upload a PDF of the cost estimation on BuilderSpace. Do not add the link to the pricing calculator in the ReadMe.**
 
 The following table provides a sample cost breakdown for deploying this Guidance with the default parameters in the US East (N. Virginia) Region for one month.
 
@@ -55,7 +53,6 @@ The following table provides a sample cost breakdown for deploying this Guidance
 | Amazon CloudWatch | 1,000 active users per month without advanced security feature | $ 0.00 |
 | Amazon S3 | 500 GB of data scanned per month stored in S3  | $ 11.50 |
 | Amazon EventBridge | 100,000 events per month | $0.10 |
-                                                |$515. 44|
 
 
 ## Prerequisites (required)
@@ -65,14 +62,14 @@ The following table provides a sample cost breakdown for deploying this Guidance
 3. An AWS account, and credentials for that account with sufficient permissions to deploy the sample code. See (Onboarding to AWS)[https://aws.amazon.com/getting-started/onboarding-to-aws] if you are new to AWS and need to create an account
 4. An (Amazon EventBridge)[https://aws.amazon.com/eventbridge/] EventBus ARN where the Macie job completion event will be sent and a rule/subscription to listen for that event. You can use the default EventBus for this or create a new one. See (lib/lambda/process-macie-job-status/README.md) [https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker.git/main/lib/lambda/process-macie-job-status/README.md] for event details. Create an Event rule to receive this event and use your application as the Target. You can also use CloudWatch logs as a target for this rule for testing. The Event pattern you can use for this rule is:
 
-{
+```{
   "source": ["macie.job.status"]
-}
+}```
 
 5. An Amazon S3 bucket containing the objects that you want to scan
 6. Your application that invokes the API to kick-off the Amazon Macie Classification job. See API_USAGE.md for sample applications including command line tools that you can use for this
 
-### Operating System (required)
+### Operating System 
 
 Supported in Windows, Mac and Linux environments
 
@@ -82,7 +79,7 @@ Supported in Windows, Mac and Linux environments
 This Guidance uses aws-cdk. If you are using aws-cdk for first time, please follow the getting started guide to install AWS CDK and bootstrap your environment https://docs.aws.amazon.com/cdk/v2/guide/getting-started.html
 
 
-## Deployment Steps (required)
+## Deployment Steps
 
 1. Clone the repo using command ```git clone git@github.com:aws-solutions-library-samples/guidance-for-sensitive-information-scanning-on-aws.git```
 2. cd to the repo folder ```cd guidance-for-sensitive-information-scanning-on-aws```
@@ -90,14 +87,14 @@ This Guidance uses aws-cdk. If you are using aws-cdk for first time, please foll
 4. Run the command to deploy the CDK environment ```npx cdk deploy```
 
 
-## Deployment Validation  (required)
+## Deployment Validation
 
 
 * Open CloudFormation console and verify the status of the template with the name starting with SolutionsGuidanceMacieStack.
 * Once the deployment is successful, you should see 3 outputs in Console - MacieApiUrl, MacieApiId and MacieApiEndpointXXXX
 
 
-## Running the Guidance (required)
+## Running the Guidance
 
 * You can use the provided Lambda functions to Create the Macie Job, process the findings and retrieve the findings through the API Gateway with the help of available endpoints 
 * Run the Create Macie Lambda function by following the instructions in the (READ.MD)[https://gitlab.aws.dev/aws-wwso-prototyping/solutions-guidance-macie/-/blob/main/lib/lambda/create-macie-job/README.md] file 
@@ -105,7 +102,7 @@ This Guidance uses aws-cdk. If you are using aws-cdk for first time, please foll
 * Run the (get-macie-findings Lambda) [https://gitlab.aws.dev/aws-wwso-prototyping/solutions-guidance-macie/-/tree/main/lib/lambda/get-macie-findings] to retrieve the results 
 
 
-## Next Steps (required)
+## Next Steps
 
 This project includes API Gateway endpoints for creating Macie classification jobs and retrieving findings:
 
@@ -117,19 +114,17 @@ GET /get-findings: Retrieve findings from completed jobs with pagination support
 Both endpoints are secured with AWS WAF and require IAM authentication. For detailed API documentation including request/response formats, authentication, and usage examples, see API_USAGE.md.
 
 
-## Cleanup (required)
+## Cleanup 
 
 Run ```npx cdk destroy``` to remove the stack that you deployed. Note that any Amazon S3 objects created by Amazon Macie will have to be manually cleaned up.
 
 
-## Notices (optional)
+## Notices 
 
-Include a legal disclaimer
-
-**Example:**
 *Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided “as is” without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*
 
 
-## Authors (optional)
+## Authors 
 
-Name of code contributors
+Kandha Sankarapandian Snr. Manager, WWSO Prototyping
+Prashob Krishnan Principal TAM (US-FSI)
