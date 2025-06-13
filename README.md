@@ -18,21 +18,22 @@ This sample code demonstrates how customer applications can scan artifacts for P
 
 ## Overview 
 
-Thi solution provides organizations with an automated, enterprise-grade solution for discovering and protecting sensitive data across their AWS environment. While Amazon Macie offers powerful built-in capabilities for sensitive data discovery, organizations often need a more integrated, automated, and customizable approach to manage their data security at scale.
+This solution provides organizations with an automated, enterprise-grade solution for discovering and protecting sensitive data across their AWS environment. While Amazon Macie offers powerful built-in capabilities for sensitive data discovery, organizations often need a more integrated, automated, and customizable approach to manage their data security at scale.
 
 This solution enables security teams and developers to:
 
-Automate routine sensitive data discovery across multiple S3 buckets
-Create custom scanning rules and workflows based on organizational requirements
-Receive real-time notifications about sensitive data findings
-Maintain detailed audit trails for compliance purposes
-Integrate sensitive data scanning into existing security workflows
-The architecture leverages serverless AWS services to provide a scalable, cost-effective solution that can be deployed without managing infrastructure. It orchestrates Amazon Macie scans through Lambda functions, manages findings through EventBridge rules, and provides comprehensive monitoring through CloudWatch, all while maintaining security through temporary credentials and KMS encryption.
+*Automate routine sensitive data discovery across multiple S3 buckets
+*Create custom scanning rules and workflows based on organizational requirements
+*Receive real-time notifications about sensitive data findings
+*Maintain detailed audit trails for compliance purposes
+*Integrate sensitive data scanning into existing security workflows
+*The architecture leverages serverless AWS services to provide a scalable, cost-effective solution that can be deployed without managing infrastructure. It orchestrates Amazon Macie scans through Lambda functions, manages findings through EventBridge rules, and provides comprehensive monitoring through CloudWatch, all while maintaining security through temporary credentials and KMS encryption.
 
 This guidance demonstrates how organizations can implement automated sensitive data discovery with granular control over scanning parameters, notification workflows, and response actions. It provides developers and security teams with the building blocks needed to create a robust sensitive data management system that meets their specific security and compliance requirements.
 
 2. Include the architecture diagram image, as well as the steps explaining the high-level overview and flow of the architecture. 
-    - To add a screenshot, create an ‘assets/images’ folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README. 
+
+![Architecture Diagram](assets/images/sensitive-information-scanning-solutions-guidance.png)
 
 ### Cost ( required )
 
