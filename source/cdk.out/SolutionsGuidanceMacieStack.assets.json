@@ -1,0 +1,62 @@
+{
+  "version": "41.0.0",
+  "files": {
+    "a3dc5a315ccf6633cb61af963aef7d8013102adc9c890d2bd1e15d99f741ad52": {
+      "displayName": "CreateMacieJobFunction/Code",
+      "source": {
+        "path": "asset.a3dc5a315ccf6633cb61af963aef7d8013102adc9c890d2bd1e15d99f741ad52",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "a3dc5a315ccf6633cb61af963aef7d8013102adc9c890d2bd1e15d99f741ad52.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "27b7ac446fa7995f39fef060eb2498722b62cdd52b5af1634101f66c1d5191f9": {
+      "displayName": "ProcessMacieJobStatusFunction/Code",
+      "source": {
+        "path": "asset.27b7ac446fa7995f39fef060eb2498722b62cdd52b5af1634101f66c1d5191f9",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "27b7ac446fa7995f39fef060eb2498722b62cdd52b5af1634101f66c1d5191f9.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "efc2d0ea522c2f58a5b03c9e94edc35253fb1cbb4e7b96bac73899c28308fac2": {
+      "displayName": "GetMacieFindingsFunction/Code",
+      "source": {
+        "path": "asset.efc2d0ea522c2f58a5b03c9e94edc35253fb1cbb4e7b96bac73899c28308fac2",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "efc2d0ea522c2f58a5b03c9e94edc35253fb1cbb4e7b96bac73899c28308fac2.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "0a23fe9356857af6f16e865bc8928b706f001c4f39cfb4ab216dc3c45f6c3efe": {
+      "displayName": "SolutionsGuidanceMacieStack Template",
+      "source": {
+        "path": "SolutionsGuidanceMacieStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "0a23fe9356857af6f16e865bc8928b706f001c4f39cfb4ab216dc3c45f6c3efe.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

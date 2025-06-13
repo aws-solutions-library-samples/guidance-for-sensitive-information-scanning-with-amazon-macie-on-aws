@@ -1,0 +1,2198 @@
+{
+ "Resources": {
+  "CreateMacieJobFunctionServiceRole8C319BDD": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Macie requires broad permissions to access S3 buckets and create classification jobs. The specific resources are determined at runtime based on the job configuration.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "CreateMacieJobFunctionServiceRoleDefaultPolicy135D150A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "events:DescribeEventBus",
+        "iam:PassRole",
+        "macie2:CreateClassificationJob",
+        "macie2:TagResource",
+        "s3:GetBucketLocation",
+        "s3:GetObject",
+        "s3:ListBucket"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "CreateMacieJobFunctionServiceRoleDefaultPolicy135D150A",
+    "Roles": [
+     {
+      "Ref": "CreateMacieJobFunctionServiceRole8C319BDD"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole/DefaultPolicy/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Macie requires broad permissions to access S3 buckets and create classification jobs. The specific resources are determined at runtime based on the job configuration.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "CreateMacieJobFunction84B97BA1": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "a3dc5a315ccf6633cb61af963aef7d8013102adc9c890d2bd1e15d99f741ad52.zip"
+    },
+    "Description": "Lambda function to create Amazon Macie Classification Jobs",
+    "Environment": {
+     "Variables": {
+      "NODE_OPTIONS": "--enable-source-maps"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "CreateMacieJobFunctionServiceRole8C319BDD",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "CreateMacieJobFunctionServiceRoleDefaultPolicy135D150A",
+    "CreateMacieJobFunctionServiceRole8C319BDD"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/CreateMacieJobFunction/Resource",
+    "aws:asset:path": "asset.a3dc5a315ccf6633cb61af963aef7d8013102adc9c890d2bd1e15d99f741ad52",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Macie requires broad permissions to access S3 buckets and create classification jobs. The specific resources are determined at runtime based on the job configuration.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "ProcessMacieJobStatusFunctionServiceRoleA045382A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Function needs broad permissions to access Macie jobs and EventBridge event buses determined at runtime from job configurations.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "ProcessMacieJobStatusFunctionServiceRoleDefaultPolicyFC179B5C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "events:DescribeEventBus",
+        "events:PutEvents",
+        "macie2:DescribeClassificationJob"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ProcessMacieJobStatusFunctionServiceRoleDefaultPolicyFC179B5C",
+    "Roles": [
+     {
+      "Ref": "ProcessMacieJobStatusFunctionServiceRoleA045382A"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole/DefaultPolicy/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Function needs broad permissions to access Macie jobs and EventBridge event buses determined at runtime from job configurations.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "ProcessMacieJobStatusFunctionA8DD4C94": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "27b7ac446fa7995f39fef060eb2498722b62cdd52b5af1634101f66c1d5191f9.zip"
+    },
+    "Description": "Lambda function to process Macie job status events and publish to EventBridge",
+    "Environment": {
+     "Variables": {
+      "NODE_OPTIONS": "--enable-source-maps"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "ProcessMacieJobStatusFunctionServiceRoleA045382A",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 300
+   },
+   "DependsOn": [
+    "ProcessMacieJobStatusFunctionServiceRoleDefaultPolicyFC179B5C",
+    "ProcessMacieJobStatusFunctionServiceRoleA045382A"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/Resource",
+    "aws:asset:path": "asset.27b7ac446fa7995f39fef060eb2498722b62cdd52b5af1634101f66c1d5191f9",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Function needs broad permissions to access Macie jobs and EventBridge event buses determined at runtime from job configurations.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "GetMacieFindingsFunctionServiceRole5443FBCE": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Function needs broad permissions to access Macie findings which are queried by job ID at runtime.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "GetMacieFindingsFunctionServiceRoleDefaultPolicyC04B84D2": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "macie2:GetFindings",
+        "macie2:ListFindings"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GetMacieFindingsFunctionServiceRoleDefaultPolicyC04B84D2",
+    "Roles": [
+     {
+      "Ref": "GetMacieFindingsFunctionServiceRole5443FBCE"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole/DefaultPolicy/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Function needs broad permissions to access Macie findings which are queried by job ID at runtime.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "GetMacieFindingsFunction2F139E53": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "efc2d0ea522c2f58a5b03c9e94edc35253fb1cbb4e7b96bac73899c28308fac2.zip"
+    },
+    "Description": "Lambda function to retrieve Macie job findings via API Gateway or EventBridge events",
+    "Environment": {
+     "Variables": {
+      "NODE_OPTIONS": "--enable-source-maps"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 1024,
+    "Role": {
+     "Fn::GetAtt": [
+      "GetMacieFindingsFunctionServiceRole5443FBCE",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 900
+   },
+   "DependsOn": [
+    "GetMacieFindingsFunctionServiceRoleDefaultPolicyC04B84D2",
+    "GetMacieFindingsFunctionServiceRole5443FBCE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/GetMacieFindingsFunction/Resource",
+    "aws:asset:path": "asset.efc2d0ea522c2f58a5b03c9e94edc35253fb1cbb4e7b96bac73899c28308fac2",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Function needs broad permissions to access Macie findings which are queried by job ID at runtime.",
+       "id": "AwsSolutions-IAM5"
+      },
+      {
+       "reason": "Lambda function uses AWS managed policy AWSLambdaBasicExecutionRole for CloudWatch Logs access, which is a standard practice.",
+       "id": "AwsSolutions-IAM4"
+      },
+      {
+       "reason": "Using NODEJS_LATEST runtime to ensure compatibility with latest AWS SDK versions and security patches.",
+       "id": "AwsSolutions-L1"
+      }
+     ]
+    }
+   }
+  },
+  "MacieJobStatusSubscriptionFilterCanInvokeLambda6021718B": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "ProcessMacieJobStatusFunctionA8DD4C94",
+      "Arn"
+     ]
+    },
+    "Principal": "logs.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":logs:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":log-group:/aws/macie/classificationjobs:*"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieJobStatusSubscriptionFilter/CanInvokeLambda"
+   }
+  },
+  "MacieJobStatusSubscriptionFilterE8F15039": {
+   "Type": "AWS::Logs::SubscriptionFilter",
+   "Properties": {
+    "DestinationArn": {
+     "Fn::GetAtt": [
+      "ProcessMacieJobStatusFunctionA8DD4C94",
+      "Arn"
+     ]
+    },
+    "FilterName": "MacieJobStatusFilter",
+    "FilterPattern": "?\"SCHEDULED_RUN_COMPLETED\" ?\"JOB_COMPLETED\" ?\"NO_BUCKETS_MATCHED_THE_CRITERIA\" ?\"JOB_CANCELLED\" ?\"ACCOUNT_\" ?\"BUCKET_\"",
+    "LogGroupName": "/aws/macie/classificationjobs"
+   },
+   "DependsOn": [
+    "MacieJobStatusSubscriptionFilterCanInvokeLambda6021718B"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieJobStatusSubscriptionFilter/Resource"
+   }
+  },
+  "MacieApiGatewayLogGroupE6AFA768": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/aws/apigateway/macie-api-access-logs",
+    "RetentionInDays": 30
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApiGatewayLogGroup/Resource"
+   }
+  },
+  "MacieApi3C037E31": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Description": "API Gateway for creating Amazon Macie Classification Jobs and retrieving findings",
+    "Name": "Macie Jobs and Findings API"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApiDeployment0C4B9E45901a34d2c5b39447e52a96627aa955d5": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "Description": "API Gateway for creating Amazon Macie Classification Jobs and retrieving findings",
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "DependsOn": [
+    "GetFindingsRequestValidator7DE76D67",
+    "MacieApicreatejobOPTIONS4DD8B227",
+    "MacieApicreatejobPOSTF7187B53",
+    "MacieApicreatejob5A211E10",
+    "MacieApigetfindingsGETCFD67A38",
+    "MacieApigetfindingsOPTIONS7F10A313",
+    "MacieApigetfindings2996E729",
+    "MacieApiOPTIONS38DC5BEB",
+    "MacieJobRequestModel603CA968",
+    "MacieJobRequestValidator75A0FDE5"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Deployment/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApiDeploymentStagev1EB5CAF91": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "AccessLogSetting": {
+     "DestinationArn": {
+      "Fn::GetAtt": [
+       "MacieApiGatewayLogGroupE6AFA768",
+       "Arn"
+      ]
+     },
+     "Format": "{\"requestId\":\"$context.requestId\",\"ip\":\"$context.identity.sourceIp\",\"user\":\"$context.identity.user\",\"caller\":\"$context.identity.caller\",\"requestTime\":\"$context.requestTime\",\"httpMethod\":\"$context.httpMethod\",\"resourcePath\":\"$context.resourcePath\",\"status\":\"$context.status\",\"protocol\":\"$context.protocol\",\"responseLength\":\"$context.responseLength\"}"
+    },
+    "DeploymentId": {
+     "Ref": "MacieApiDeployment0C4B9E45901a34d2c5b39447e52a96627aa955d5"
+    },
+    "MethodSettings": [
+     {
+      "DataTraceEnabled": false,
+      "HttpMethod": "*",
+      "MetricsEnabled": true,
+      "ResourcePath": "/*"
+     }
+    ],
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    },
+    "StageName": "v1"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/DeploymentStage.v1/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApiOPTIONS38DC5BEB": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Fn::GetAtt": [
+      "MacieApi3C037E31",
+      "RootResourceId"
+     ]
+    },
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/OPTIONS/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApicreatejob5A211E10": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "MacieApi3C037E31",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "create-job",
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/create-job/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApicreatejobOPTIONS4DD8B227": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "MacieApicreatejob5A211E10"
+    },
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/create-job/OPTIONS/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApicreatejobPOSTApiPermissionSolutionsGuidanceMacieStackMacieApi6C3760EFPOSTcreatejob57C3DA72": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "CreateMacieJobFunction84B97BA1",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "MacieApi3C037E31"
+       },
+       "/",
+       {
+        "Ref": "MacieApiDeploymentStagev1EB5CAF91"
+       },
+       "/POST/create-job"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST/ApiPermission.SolutionsGuidanceMacieStackMacieApi6C3760EF.POST..create-job",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApicreatejobPOSTApiPermissionTestSolutionsGuidanceMacieStackMacieApi6C3760EFPOSTcreatejobA8AD1C12": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "CreateMacieJobFunction84B97BA1",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "MacieApi3C037E31"
+       },
+       "/test-invoke-stage/POST/create-job"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST/ApiPermission.Test.SolutionsGuidanceMacieStackMacieApi6C3760EF.POST..create-job",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApicreatejobPOSTF7187B53": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "AWS_IAM",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "IntegrationResponses": [
+      {
+       "ResponseTemplates": {
+        "application/json": "$input.json(\"$\")"
+       },
+       "StatusCode": "200"
+      },
+      {
+       "ResponseTemplates": {
+        "application/json": "$input.json(\"$\")"
+       },
+       "SelectionPattern": ".*\"statusCode\":400.*",
+       "StatusCode": "400"
+      },
+      {
+       "ResponseTemplates": {
+        "application/json": "$input.json(\"$\")"
+       },
+       "SelectionPattern": ".*\"statusCode\":500.*",
+       "StatusCode": "500"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "$input.json(\"$\")"
+     },
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "CreateMacieJobFunction84B97BA1",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "MethodResponses": [
+     {
+      "ResponseModels": {
+       "application/json": "Empty"
+      },
+      "StatusCode": "200"
+     },
+     {
+      "ResponseModels": {
+       "application/json": "Error"
+      },
+      "StatusCode": "400"
+     },
+     {
+      "ResponseModels": {
+       "application/json": "Error"
+      },
+      "StatusCode": "500"
+     }
+    ],
+    "RequestModels": {
+     "application/json": {
+      "Ref": "MacieJobRequestModel603CA968"
+     }
+    },
+    "RequestValidatorId": {
+     "Ref": "MacieJobRequestValidator75A0FDE5"
+    },
+    "ResourceId": {
+     "Ref": "MacieApicreatejob5A211E10"
+    },
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApigetfindings2996E729": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "MacieApi3C037E31",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "get-findings",
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApigetfindingsOPTIONS7F10A313": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "MacieApigetfindings2996E729"
+    },
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/OPTIONS/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApigetfindingsGETApiPermissionSolutionsGuidanceMacieStackMacieApi6C3760EFGETgetfindings2326BAF4": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GetMacieFindingsFunction2F139E53",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "MacieApi3C037E31"
+       },
+       "/",
+       {
+        "Ref": "MacieApiDeploymentStagev1EB5CAF91"
+       },
+       "/GET/get-findings"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET/ApiPermission.SolutionsGuidanceMacieStackMacieApi6C3760EF.GET..get-findings",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApigetfindingsGETApiPermissionTestSolutionsGuidanceMacieStackMacieApi6C3760EFGETgetfindings24728928": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GetMacieFindingsFunction2F139E53",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "MacieApi3C037E31"
+       },
+       "/test-invoke-stage/GET/get-findings"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET/ApiPermission.Test.SolutionsGuidanceMacieStackMacieApi6C3760EF.GET..get-findings",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApigetfindingsGETCFD67A38": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "AWS_IAM",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,OPTIONS'",
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+       },
+       "ResponseTemplates": {
+        "application/json": "$input.json(\"$\")"
+       },
+       "StatusCode": "200"
+      },
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'"
+       },
+       "ResponseTemplates": {
+        "application/json": "$input.json(\"$\")"
+       },
+       "SelectionPattern": ".*\"statusCode\":400.*",
+       "StatusCode": "400"
+      },
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Origin": "'*'"
+       },
+       "ResponseTemplates": {
+        "application/json": "$input.json(\"$\")"
+       },
+       "SelectionPattern": ".*\"statusCode\":500.*",
+       "StatusCode": "500"
+      }
+     ],
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GetMacieFindingsFunction2F139E53",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "MethodResponses": [
+     {
+      "ResponseModels": {
+       "application/json": "Empty"
+      },
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true,
+       "method.response.header.Access-Control-Allow-Headers": true
+      },
+      "StatusCode": "200"
+     },
+     {
+      "ResponseModels": {
+       "application/json": "Error"
+      },
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Origin": true
+      },
+      "StatusCode": "400"
+     },
+     {
+      "ResponseModels": {
+       "application/json": "Error"
+      },
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Origin": true
+      },
+      "StatusCode": "500"
+     }
+    ],
+    "RequestParameters": {
+     "method.request.querystring.jobId": true,
+     "method.request.querystring.maxResults": false,
+     "method.request.querystring.nextToken": false
+    },
+    "RequestValidatorId": {
+     "Ref": "GetFindingsRequestValidator7DE76D67"
+    },
+    "ResourceId": {
+     "Ref": "MacieApigetfindings2996E729"
+    },
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "Request validation is implemented through RequestValidator and JSON schema validation.",
+       "id": "AwsSolutions-APIG2"
+      },
+      {
+       "reason": "WAF Web ACL is associated with the API Gateway for additional protection against common web exploits.",
+       "id": "AwsSolutions-APIG3"
+      },
+      {
+       "reason": "IAM authorization is used instead of API keys for better security and integration with AWS identity services.",
+       "id": "AwsSolutions-APIG4"
+      },
+      {
+       "reason": "CloudWatch logging is enabled for the API Gateway stage with INFO level logging and access logs.",
+       "id": "AwsSolutions-APIG6"
+      },
+      {
+       "reason": "IAM authentication is used instead of Cognito for this internal API, which is appropriate for service-to-service communication.",
+       "id": "AwsSolutions-COG4"
+      }
+     ]
+    }
+   }
+  },
+  "MacieJobRequestModel603CA968": {
+   "Type": "AWS::ApiGateway::Model",
+   "Properties": {
+    "ContentType": "application/json",
+    "Description": "Model for Macie Classification Job creation requests",
+    "Name": "MacieJobRequest",
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    },
+    "Schema": {
+     "$schema": "http://json-schema.org/draft-04/schema#",
+     "title": "MacieJobRequest",
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 500
+      },
+      "jobType": {
+       "type": "string",
+       "enum": [
+        "ONE_TIME",
+        "SCHEDULED"
+       ]
+      },
+      "s3JobDefinition": {
+       "type": "object",
+       "properties": {
+        "bucketDefinitions": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "accountId": {
+            "type": "string",
+            "pattern": "^[0-9]{12}$"
+           },
+           "buckets": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          },
+          "required": [
+           "accountId",
+           "buckets"
+          ]
+         }
+        }
+       },
+       "required": [
+        "bucketDefinitions"
+       ]
+      },
+      "tags": {
+       "type": "object",
+       "properties": {
+        "JobStatusEventBusArn": {
+         "type": "string",
+         "pattern": "^arn:aws:events:[a-z0-9-]+:[0-9]{12}:event-bus/.+$"
+        }
+       },
+       "required": [
+        "JobStatusEventBusArn"
+       ]
+      }
+     },
+     "required": [
+      "name",
+      "jobType",
+      "s3JobDefinition",
+      "tags"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieJobRequestModel/Resource"
+   }
+  },
+  "MacieJobRequestValidator75A0FDE5": {
+   "Type": "AWS::ApiGateway::RequestValidator",
+   "Properties": {
+    "Name": "MacieJobRequestValidator",
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    },
+    "ValidateRequestBody": true,
+    "ValidateRequestParameters": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieJobRequestValidator/Resource"
+   }
+  },
+  "GetFindingsRequestValidator7DE76D67": {
+   "Type": "AWS::ApiGateway::RequestValidator",
+   "Properties": {
+    "Name": "GetFindingsRequestValidator",
+    "RestApiId": {
+     "Ref": "MacieApi3C037E31"
+    },
+    "ValidateRequestBody": false,
+    "ValidateRequestParameters": true
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/GetFindingsRequestValidator/Resource"
+   }
+  },
+  "ApiGatewayCloudWatchRole86F22A4D": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "apigateway.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "IAM role for API Gateway to write logs to CloudWatch",
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/ApiGatewayCloudWatchRole/Resource",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "API Gateway CloudWatch role uses AWS managed policy AmazonAPIGatewayPushToCloudWatchLogs which is the standard AWS-recommended policy for this purpose.",
+       "id": "AwsSolutions-IAM4"
+      }
+     ]
+    }
+   }
+  },
+  "ApiGatewayAccount": {
+   "Type": "AWS::ApiGateway::Account",
+   "Properties": {
+    "CloudWatchRoleArn": {
+     "Fn::GetAtt": [
+      "ApiGatewayCloudWatchRole86F22A4D",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/ApiGatewayAccount"
+   }
+  },
+  "MacieApiWafConstructMacieApiWafConstructWebACL54B00260": {
+   "Type": "AWS::WAFv2::WebACL",
+   "Properties": {
+    "DefaultAction": {
+     "Allow": {}
+    },
+    "Rules": [
+     {
+      "Name": "AWS-AWSManagedRulesBotControlRuleSet",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 0,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesBotControlRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesBotControlRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWS-AWSManagedRulesKnownBadInputsRuleSet",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 1,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesKnownBadInputsRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesKnownBadInputsRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWS-AWSManagedRulesCommonRuleSet",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 2,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesCommonRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesCommonRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWS-AWSManagedRulesAnonymousIpList",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 3,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesAnonymousIpList",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesAnonymousIpList",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWS-AWSManagedRulesAmazonIpReputationList",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 4,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesAmazonIpReputationList",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesAmazonIpReputationList",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWS-AWSManagedRulesAdminProtectionRuleSet",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 5,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesAdminProtectionRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesAdminProtectionRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     },
+     {
+      "Name": "AWS-AWSManagedRulesSQLiRuleSet",
+      "OverrideAction": {
+       "None": {}
+      },
+      "Priority": 6,
+      "Statement": {
+       "ManagedRuleGroupStatement": {
+        "Name": "AWSManagedRulesSQLiRuleSet",
+        "VendorName": "AWS"
+       }
+      },
+      "VisibilityConfig": {
+       "CloudWatchMetricsEnabled": true,
+       "MetricName": "AWSManagedRulesSQLiRuleSet",
+       "SampledRequestsEnabled": true
+      }
+     }
+    ],
+    "Scope": "REGIONAL",
+    "VisibilityConfig": {
+     "CloudWatchMetricsEnabled": true,
+     "MetricName": "webACL",
+     "SampledRequestsEnabled": true
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApiWafConstruct/MacieApiWafConstruct-WebACL",
+    "cdk_nag": {
+     "rules_to_suppress": [
+      {
+       "reason": "WAF Web ACL includes comprehensive rule sets: Common Rule Set, Known Bad Inputs, SQL Injection protection, and rate limiting.",
+       "id": "AwsSolutions-WAF2"
+      }
+     ]
+    }
+   }
+  },
+  "MacieApiWafConstructWebACLAssociation": {
+   "Type": "AWS::WAFv2::WebACLAssociation",
+   "Properties": {
+    "ResourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":apigateway:",
+       {
+        "Ref": "AWS::Region"
+       },
+       "::/restapis/",
+       {
+        "Ref": "MacieApi3C037E31"
+       },
+       "/stages/",
+       {
+        "Ref": "MacieApiDeploymentStagev1EB5CAF91"
+       }
+      ]
+     ]
+    },
+    "WebACLArn": {
+     "Fn::GetAtt": [
+      "MacieApiWafConstructMacieApiWafConstructWebACL54B00260",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/MacieApiWafConstruct-WebACLAssociation"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/+1ZX2/bNhD/LNXeAlpOk23o8jQnXbpgSWPYwfpgGMGZPMtMKFIlqbiuoO8+kNQ/20vWJU3RGnkwRP6Od7w73h1P8kFcvP7t13j/FSxNj7LbnuCzuBhboLcElua6EJDOGFxLxfDGxO/94zSX1HIlJ0WE0upVdBTtRSRagGQCdTXTubQ8xWrmhiq31SzFVOnVmH+uyQwN1TxzQisE5R3XSqYoa6ZZLpngMomOiijlks9X0ZHVOZLIqFxTvICsBizoBGu+W8TsPaRoaip+sqgliAvFcuHgaC8qSUQVw2pclGSHTNspY17O6ccwZpfPaUo4pHExUgInRQTG5Cmy45XbLdNcUp6BGFCq8kahsMYxDGijeUmiFCQkyIZKcMqd/Emxhq0Gulo7dS4Exq7UsN4irHA8FdVaoIszKbjEhhbtRV9AfFjuU6g775wdMPDbmLCduuWUnMylE0rCYqdSo+2VcpQtI7ZhxsYWLLr8N2tx+VT4ubX5WvK9G4MHS2IOr8EYtCYeuAcxh/FxTm/RHoPByZSEhi4uTuay7uM8O+qUG8OVLIlQiYmLcT5rjuuUC4t6UkRCJe+0yrO2GFsuoVOM537lEKwrnC6ghEqq2dhqX5ND5ISFrtp2YmF7T3Je7djZvGEikUaLMmx/uO+mqbprc8Prp9Wqkl6LKglkPAGLS1jFxQiNHWR8UkQ6jDrity8bhplQq0sPGWefsZBghyVFqzk1f0iYCWT1RQKUojHnKnm75bGGdKp0Crb2D8M55MKeKG2GGueCJwvb2RaEUMtLzRMuTS3IQRdoF4qtQX8iMNTt5eVyLlhK3nprXCxNin8xFjLe+hm4bJfXt3xVlc5VwimIM7ZxL+wa7p3XeoGM3eF719VQ5a/niYqQI040GWFoZXxWu+JAwsmHMPakuteyNgu0CuDSYqK7m6lOXOV2oTT/7Jqz7uys5q4hz3+1yuoezwXLX7ga4ceca2fiHITB+9Z7jywUG6HJlDTVzWEs2Nyc1I2jC7tAHoKGFG0TxdOyOqKLNSn/Vwh5cda3d9ambRo/5mjs3yA4A6v0OnyhGArzGDd0OJ3uX3Xdo1y6LuA74H+J/e879jf0eHz832/aFwb8Mwp4air9x7H9YIL9DR/kNlf8pIgy0G1vkYFdDEHb5gAeoNbdnhdEvBJto1tHlUMfbHoNXWAKvtutRj7+j/r9G6NkL4Cx0kmfaZjb3v7P/YD95L/nWNF82wmhr2Y3SK1TVqsMteVoOpEfqkLbrHqtyWgjVbbM2MyljkV3AcNKxrFizQehDVL3RNyCKvMftc2mrHv08OWvPqh12Q6r3sNLsoT53YF/b/uAs8HJOWlGA2MU5b62lGUbNl6n9jcl/oXQtY9cJo77MrdZbkvy5pf44NXv7h8Ao0Tui1aPKmmszqk1fUdYwnyJM6Ci13l1+lCDV2qQ8XcBLYn7ryC+Mf2712/ig/344NWN4bxXfeSLR+H5DxTOgut5GAAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "SolutionsGuidanceMacieStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "MacieApiEndpoint4B0B43C5": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "MacieApi3C037E31"
+      },
+      ".execute-api.",
+      {
+       "Ref": "AWS::Region"
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "MacieApiDeploymentStagev1EB5CAF91"
+      },
+      "/"
+     ]
+    ]
+   }
+  },
+  "MacieApiUrl": {
+   "Description": "URL of the Macie Jobs and Findings API",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "MacieApi3C037E31"
+      },
+      ".execute-api.",
+      {
+       "Ref": "AWS::Region"
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "MacieApiDeploymentStagev1EB5CAF91"
+      },
+      "/"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": "MacieApiUrl"
+   }
+  },
+  "MacieApiId": {
+   "Description": "ID of the Macie Jobs and Findings API",
+   "Value": {
+    "Ref": "MacieApi3C037E31"
+   },
+   "Export": {
+    "Name": "MacieApiId"
+   }
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
