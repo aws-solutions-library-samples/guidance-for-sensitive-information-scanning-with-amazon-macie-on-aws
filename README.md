@@ -55,23 +55,25 @@ The following table provides a sample cost breakdown for deploying this Guidance
 | Amazon EventBridge | 100,000 events per month | $0.10 |
 
 
-## Prerequisites (required)
+## Prerequisites
 
 1. Enable Amazon Macie on your account. See [Getting Started](https://docs.aws.amazon.com/macie/latest/user/getting-started.html) with Macie and follow all steps until Step 5. This ensures Macie is configured correctly and the Macie CloudWatch log group is created prior to deploying our stack
 2. A recent/LTS version of (node.js)[https://nodejs.org/en] installed on your laptop/PC from which you will be deploying this solution
 3. An AWS account, and credentials for that account with sufficient permissions to deploy the sample code. See (Onboarding to AWS)[https://aws.amazon.com/getting-started/onboarding-to-aws] if you are new to AWS and need to create an account
 4. An (Amazon EventBridge)[https://aws.amazon.com/eventbridge/] EventBus ARN where the Macie job completion event will be sent and a rule/subscription to listen for that event. You can use the default EventBus for this or create a new one. See (lib/lambda/process-macie-job-status/README.md) [https://github.com/aws-solutions-library-samples/guidance-for-training-an-aws-deepracer-model-using-amazon-sagemaker.git/main/lib/lambda/process-macie-job-status/README.md] for event details. Create an Event rule to receive this event and use your application as the Target. You can also use CloudWatch logs as a target for this rule for testing. The Event pattern you can use for this rule is:
 
-```{
+ ```
+ {
   "source": ["macie.job.status"]
-}```
+}
+ ```
 
 5. An Amazon S3 bucket containing the objects that you want to scan
 6. Your application that invokes the API to kick-off the Amazon Macie Classification job. See API_USAGE.md for sample applications including command line tools that you can use for this
 
 ### Operating System 
 
-Supported in Windows, Mac and Linux environments
+Can be deployed using Windows, Mac and Linux environments
 
 
 ### aws cdk bootstrap (if sample code has aws-cdk)
