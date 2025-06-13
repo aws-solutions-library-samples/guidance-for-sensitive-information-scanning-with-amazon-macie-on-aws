@@ -31,7 +31,7 @@ This solution enables security teams and developers to:
 
 This guidance demonstrates how organizations can implement automated sensitive data discovery with granular control over scanning parameters, notification workflows, and response actions. It provides developers and security teams with the building blocks needed to create a robust sensitive data management system that meets their specific security and compliance requirements.
 
-2. Include the architecture diagram image, as well as the steps explaining the high-level overview and flow of the architecture. 
+## Architecture Diagram
 
 ![Architecture Diagram](assets/images/sensitive-information-scanning-solutions-guidance.png)
 
