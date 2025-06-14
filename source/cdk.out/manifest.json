@@ -1,0 +1,1214 @@
+{
+  "version": "41.0.0",
+  "artifacts": {
+    "SolutionsGuidanceMacieStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "SolutionsGuidanceMacieStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "SolutionsGuidanceMacieStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "SolutionsGuidanceMacieStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/0a23fe9356857af6f16e865bc8928b706f001c4f39cfb4ab216dc3c45f6c3efe.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "SolutionsGuidanceMacieStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "SolutionsGuidanceMacieStack.assets"
+      ],
+      "metadata": {
+        "/SolutionsGuidanceMacieStack": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "When using NODEJS_LATEST the runtime version may change as new runtimes are released, this may affect the availability of packages shipped with the environment. Ensure that any external dependencies are available through layers or specify a specific runtime version. [ack: @aws-cdk/aws-lambda-nodejs:variableRuntimeExternals]",
+            "trace": [
+              "Annotations.addMessage (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1608)",
+              "Annotations.addWarningV2 (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/aws-cdk-lib/core/lib/annotations.js:1:825)",
+              "new Bundling (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/aws-cdk-lib/aws-lambda-nodejs/lib/bundling.js:1:4046)",
+              "Function.bundle (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/aws-cdk-lib/aws-lambda-nodejs/lib/bundling.js:1:1066)",
+              "new NodejsFunction2 (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/aws-cdk-lib/aws-lambda-nodejs/lib/function.js:1:2882)",
+              "new NodejsFunction2 (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:488)",
+              "new SolutionsGuidanceMacieStack (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/lib/solutions-guidance-macie-stack.ts:29:36)",
+              "Object.<anonymous> (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/bin/solutions-guidance-macie.ts:8:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1364:14)",
+              "Module.m._compile (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/ts-node/src/index.ts:1618:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1422:10)",
+              "Object.require.extensions.<computed> [as .ts] (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/ts-node/src/index.ts:1621:12)",
+              "Module.load (node:internal/modules/cjs/loader:1203:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:1019:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+              "phase4 (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/ts-node/src/bin.ts:649:14)",
+              "bootstrap (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/ts-node/src/bin.ts:95:10)",
+              "main (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/ts-node/src/bin.ts:55:10)",
+              "Object.<anonymous> (/Users/kprashob/Projects/solutions-guidance-macie/solutions-guidance-macie/node_modules/ts-node/src/bin.ts:800:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1364:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1422:10)",
+              "Module.load (node:internal/modules/cjs/loader:1203:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:1019:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)",
+              "node:internal/main/run_main_module:28:49"
+            ]
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "entry": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "memorySize": "*",
+              "description": "*",
+              "environment": "*",
+              "bundling": {
+                "minify": true,
+                "sourceMap": true,
+                "target": "*",
+                "keepNames": true,
+                "externalModules": "*"
+              },
+              "code": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "entry": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "memorySize": "*",
+              "description": "*",
+              "environment": "*",
+              "bundling": {
+                "minify": true,
+                "sourceMap": true,
+                "target": "*",
+                "keepNames": true,
+                "externalModules": "*"
+              }
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "managedPolicies": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole/ImportServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateMacieJobFunctionServiceRole8C319BDD"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateMacieJobFunctionServiceRoleDefaultPolicy135D150A"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CreateMacieJobFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateMacieJobFunction84B97BA1"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "entry": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "memorySize": "*",
+              "description": "*",
+              "environment": "*",
+              "bundling": {
+                "minify": true,
+                "sourceMap": true,
+                "target": "*",
+                "keepNames": true,
+                "externalModules": "*"
+              },
+              "code": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "entry": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "memorySize": "*",
+              "description": "*",
+              "environment": "*",
+              "bundling": {
+                "minify": true,
+                "sourceMap": true,
+                "target": "*",
+                "keepNames": true,
+                "externalModules": "*"
+              }
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "managedPolicies": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole/ImportServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProcessMacieJobStatusFunctionServiceRoleA045382A"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProcessMacieJobStatusFunctionServiceRoleDefaultPolicyFC179B5C"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ProcessMacieJobStatusFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ProcessMacieJobStatusFunctionA8DD4C94"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "entry": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "memorySize": "*",
+              "description": "*",
+              "environment": "*",
+              "bundling": {
+                "minify": true,
+                "sourceMap": true,
+                "target": "*",
+                "keepNames": true,
+                "externalModules": "*"
+              },
+              "code": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "entry": "*",
+              "handler": "*",
+              "runtime": "*",
+              "timeout": "*",
+              "memorySize": "*",
+              "description": "*",
+              "environment": "*",
+              "bundling": {
+                "minify": true,
+                "sourceMap": true,
+                "target": "*",
+                "keepNames": true,
+                "externalModules": "*"
+              }
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "managedPolicies": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole/ImportServiceRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetMacieFindingsFunctionServiceRole5443FBCE"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetMacieFindingsFunctionServiceRoleDefaultPolicyC04B84D2"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetMacieFindingsFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetMacieFindingsFunction2F139E53"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobStatusSubscriptionFilter": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "logGroup": "*",
+              "destination": "*",
+              "filterPattern": {
+                "logPatternString": "*"
+              },
+              "filterName": "*"
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobStatusSubscriptionFilter/CanInvokeLambda": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieJobStatusSubscriptionFilterCanInvokeLambda6021718B"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobStatusSubscriptionFilter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieJobStatusSubscriptionFilterE8F15039"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApiGatewayLogGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "logGroupName": "*",
+              "retention": 30,
+              "removalPolicy": "destroy"
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApiGatewayLogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiGatewayLogGroupE6AFA768"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "restApiName": "*",
+              "description": "*",
+              "deployOptions": {
+                "stageName": "*",
+                "metricsEnabled": true,
+                "accessLogDestination": "*",
+                "accessLogFormat": "*"
+              },
+              "defaultCorsPreflightOptions": {
+                "allowOrigins": "*",
+                "allowMethods": "*",
+                "allowHeaders": "*"
+              }
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApi3C037E31"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Deployment": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "description": "*",
+              "api": "*",
+              "retainDeployments": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToLogicalId": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiDeployment0C4B9E45901a34d2c5b39447e52a96627aa955d5"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/DeploymentStage.v1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "deployment": "*",
+              "stageName": "*",
+              "metricsEnabled": true,
+              "accessLogDestination": "*",
+              "accessLogFormat": "*"
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/DeploymentStage.v1/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiDeploymentStagev1EB5CAF91"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiEndpoint4B0B43C5"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/OPTIONS": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "resource": "*",
+              "httpMethod": "*",
+              "integration": "*",
+              "options": {
+                "authorizer": {
+                  "authorizerId": "*",
+                  "authorizationType": "*"
+                },
+                "apiKeyRequired": false,
+                "authorizationType": "*",
+                "methodResponses": [
+                  {
+                    "statusCode": "*",
+                    "responseParameters": "*"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseParameters": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiOPTIONS38DC5BEB"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "parent": "*",
+              "pathPart": "*"
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApicreatejob5A211E10"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/OPTIONS": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "resource": "*",
+              "httpMethod": "*",
+              "integration": "*",
+              "options": {
+                "authorizer": {
+                  "authorizerId": "*",
+                  "authorizationType": "*"
+                },
+                "apiKeyRequired": false,
+                "authorizationType": "*",
+                "methodResponses": [
+                  {
+                    "statusCode": "*",
+                    "responseParameters": "*"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseParameters": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApicreatejobOPTIONS4DD8B227"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "resource": "*",
+              "httpMethod": "*",
+              "integration": "*",
+              "options": {
+                "authorizationType": "*",
+                "requestValidator": "*",
+                "requestModels": "*",
+                "methodResponses": [
+                  {
+                    "statusCode": "*",
+                    "responseModels": "*"
+                  },
+                  {
+                    "statusCode": "*",
+                    "responseModels": "*"
+                  },
+                  {
+                    "statusCode": "*",
+                    "responseModels": "*"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseModels": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseModels": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseModels": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST/ApiPermission.SolutionsGuidanceMacieStackMacieApi6C3760EF.POST..create-job": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApicreatejobPOSTApiPermissionSolutionsGuidanceMacieStackMacieApi6C3760EFPOSTcreatejob57C3DA72"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST/ApiPermission.Test.SolutionsGuidanceMacieStackMacieApi6C3760EF.POST..create-job": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApicreatejobPOSTApiPermissionTestSolutionsGuidanceMacieStackMacieApi6C3760EFPOSTcreatejobA8AD1C12"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/create-job/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApicreatejobPOSTF7187B53"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "parent": "*",
+              "pathPart": "*"
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApigetfindings2996E729"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/OPTIONS": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "resource": "*",
+              "httpMethod": "*",
+              "integration": "*",
+              "options": {
+                "authorizer": {
+                  "authorizerId": "*",
+                  "authorizationType": "*"
+                },
+                "apiKeyRequired": false,
+                "authorizationType": "*",
+                "methodResponses": [
+                  {
+                    "statusCode": "*",
+                    "responseParameters": "*"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseParameters": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApigetfindingsOPTIONS7F10A313"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "resource": "*",
+              "httpMethod": "*",
+              "integration": "*",
+              "options": {
+                "authorizationType": "*",
+                "requestValidator": "*",
+                "requestParameters": "*",
+                "methodResponses": [
+                  {
+                    "statusCode": "*",
+                    "responseModels": "*",
+                    "responseParameters": "*"
+                  },
+                  {
+                    "statusCode": "*",
+                    "responseModels": "*",
+                    "responseParameters": "*"
+                  },
+                  {
+                    "statusCode": "*",
+                    "responseModels": "*",
+                    "responseParameters": "*"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseModels": "*",
+                  "responseParameters": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseModels": "*",
+                  "responseParameters": "*"
+                }
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addMethodResponse": [
+                {
+                  "statusCode": "*",
+                  "responseModels": "*",
+                  "responseParameters": "*"
+                }
+              ]
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET/ApiPermission.SolutionsGuidanceMacieStackMacieApi6C3760EF.GET..get-findings": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApigetfindingsGETApiPermissionSolutionsGuidanceMacieStackMacieApi6C3760EFGETgetfindings2326BAF4"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET/ApiPermission.Test.SolutionsGuidanceMacieStackMacieApi6C3760EF.GET..get-findings": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApigetfindingsGETApiPermissionTestSolutionsGuidanceMacieStackMacieApi6C3760EFGETgetfindings24728928"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApi/Default/get-findings/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApigetfindingsGETCFD67A38"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobRequestModel": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "restApi": "*",
+              "modelName": "*",
+              "description": "*",
+              "schema": {
+                "schema": "http://json-schema.org/draft-04/schema#",
+                "title": "*",
+                "type": "object",
+                "properties": "*",
+                "required": "*"
+              }
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobRequestModel/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieJobRequestModel603CA968"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobRequestValidator": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "restApi": "*",
+              "requestValidatorName": "*",
+              "validateRequestBody": true,
+              "validateRequestParameters": true
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieJobRequestValidator/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieJobRequestValidator75A0FDE5"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetFindingsRequestValidator": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "restApi": "*",
+              "requestValidatorName": "*",
+              "validateRequestParameters": true,
+              "validateRequestBody": false
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/GetFindingsRequestValidator/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetFindingsRequestValidator7DE76D67"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ApiGatewayCloudWatchRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "managedPolicies": [
+                {
+                  "managedPolicyArn": "*"
+                }
+              ],
+              "description": "*"
+            }
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ApiGatewayCloudWatchRole/ImportApiGatewayCloudWatchRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ApiGatewayCloudWatchRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiGatewayCloudWatchRole86F22A4D"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/ApiGatewayAccount": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiGatewayAccount"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApiWafConstruct/MacieApiWafConstruct-WebACL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiWafConstructMacieApiWafConstructWebACL54B00260"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApiWafConstruct-WebACLAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiWafConstructWebACLAssociation"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApiUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiUrl"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/MacieApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MacieApiId"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/SolutionsGuidanceMacieStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "SolutionsGuidanceMacieStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  },
+  "minimumCliVersion": "2.1005.0"
+}

@@ -1,17 +1,9 @@
-# Guidance Title (required)
+# Guidance for Sensitive Information Scanning with Amazon Macie on AWS
 
-The Guidance title should be consistent with the title established first in Alchemy.
-
-**Example:** *Guidance for Product Substitutions on AWS*
-
-This title correlates exactly to the Guidance it’s linked to, including its corresponding sample code repository. 
+This sample code demonstrates how customer applications can scan artifacts for Personally Identifiable Information (PII), financial information or credentials, and other sensitive information with Amazon Macie.
 
 
-## Table of Contents (required)
-
-List the top-level sections of the README template, along with a hyperlink to the specific section.
-
-### Required
+## Table of Contents
 
 1. [Overview](#overview-required)
     - [Cost](#cost)
@@ -23,193 +15,104 @@ List the top-level sections of the README template, along with a hyperlink to th
 6. [Next Steps](#next-steps-required)
 7. [Cleanup](#cleanup-required)
 
-***Optional***
 
-8. [FAQ, known issues, additional considerations, and limitations](#faq-known-issues-additional-considerations-and-limitations-optional)
-9. [Revisions](#revisions-optional)
-10. [Notices](#notices-optional)
-11. [Authors](#authors-optional)
+## Overview 
 
-## Overview (required)
+This solution provides organizations with an automated, enterprise-grade solution for discovering and protecting sensitive data across their AWS environment. While Amazon Macie offers powerful built-in capabilities for sensitive data discovery, organizations often need a more integrated, automated, and customizable approach to manage their data security at scale.
 
-1. Provide a brief overview explaining the what, why, or how of your Guidance. You can answer any one of the following to help you write this:
+This solution enables security teams and developers to:
 
-    - **Why did you build this Guidance?**
-    - **What problem does this Guidance solve?**
+* Automate routine sensitive data discovery across multiple S3 buckets
+* Create custom scanning rules and workflows based on organizational requirements
+* Receive real-time notifications about sensitive data findings
+* Maintain detailed audit trails for compliance purposes
+* Integrate sensitive data scanning into existing security workflows
+* The architecture leverages serverless AWS services to provide a scalable, cost-effective solution that can be deployed without managing infrastructure. It orchestrates Amazon Macie scans through Lambda functions, manages findings through EventBridge rules, and provides comprehensive monitoring through CloudWatch, all while maintaining security through temporary credentials and KMS encryption.
 
-2. Include the architecture diagram image, as well as the steps explaining the high-level overview and flow of the architecture. 
-    - To add a screenshot, create an ‘assets/images’ folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README. 
+This guidance demonstrates how organizations can implement automated sensitive data discovery with granular control over scanning parameters, notification workflows, and response actions. It provides developers and security teams with the building blocks needed to create a robust sensitive data management system that meets their specific security and compliance requirements.
 
-### Cost ( required )
+## Architecture Diagram
 
-This section is for a high-level cost estimate. Think of a likely straightforward scenario with reasonable assumptions based on the problem the Guidance is trying to solve. Provide an in-depth cost breakdown table in this section below ( you should use AWS Pricing Calculator to generate cost breakdown ).
+![Architecture Diagram](assets/images/sensitive-information-scanning-architecture.png)
 
-Start this section with the following boilerplate text:
+### Cost
 
-_You are responsible for the cost of the AWS services used while running this Guidance. As of <month> <year>, the cost for running this Guidance with the default settings in the <Default AWS Region (Most likely will be US East (N. Virginia)) > is approximately $<n.nn> per month for processing ( <nnnnn> records )._
+You are responsible for the cost of the AWS services used while running this Guidance. As of June 2025, the cost for running this Guidance with the default settings in the US East (N. Virginia) AWS Region is approximately $515.44 per month for processing 500 GB of data stored in S3
 
-Replace this amount with the approximate cost for running your Guidance in the default Region. This estimate should be per month and for processing/serving resonable number of requests/entities.
-
-Suggest you keep this boilerplate text:
-_We recommend creating a [Budget](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) through [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this Guidance._
-
-### Sample Cost Table ( required )
-
-**Note : Once you have created a sample cost table using AWS Pricing Calculator, copy the cost breakdown to below table and upload a PDF of the cost estimation on BuilderSpace. Do not add the link to the pricing calculator in the ReadMe.**
+We recommend creating a [Budget](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) through [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this Guidance.
 
 The following table provides a sample cost breakdown for deploying this Guidance with the default parameters in the US East (N. Virginia) Region for one month.
 
 | AWS service  | Dimensions | Cost [USD] |
 | ----------- | ------------ | ------------ |
-| Amazon API Gateway | 1,000,000 REST API calls per month  | $ 3.50month |
-| Amazon Cognito | 1,000 active users per month without advanced security feature | $ 0.00 |
+|Amazon Macie| Data scanned: 500 GB per month | $499 |
+|Amazon API Gateway | 100,000 REST API calls per month  | $0.35  |
+|AWS Lambda| 10 custom metrics with detailed monitoring| $3.00 |
+| Amazon CloudWatch | 1,000 active users per month without advanced security feature | $0.00 |
+| Amazon S3 | 500 GB of data scanned per month stored in S3  | $11.50 |
+| Amazon EventBridge | 100,000 events per month | $0.10 |
 
-## Prerequisites (required)
 
-### Operating System (required)
+## Prerequisites
 
-- Talk about the base Operating System (OS) and environment that can be used to run or deploy this Guidance, such as *Mac, Linux, or Windows*. Include all installable packages or modules required for the deployment. 
-- By default, assume Amazon Linux 2/Amazon Linux 2023 AMI as the base environment. All packages that are not available by default in AMI must be listed out.  Include the specific version number of the package or module.
+1. Enable Amazon Macie on your account. See [Getting Started](https://docs.aws.amazon.com/macie/latest/user/getting-started.html) with Macie and follow all steps until Step 5. This ensures Macie is configured correctly and the Macie CloudWatch log group is created prior to deploying our stack
+2. A recent/LTS version of [node.js](https://nodejs.org/en) installed on your laptop/PC from which you will be deploying this solution
+3. An AWS account, and credentials for that account with sufficient permissions to deploy the sample code. See [Onboarding to AWS](https://aws.amazon.com/getting-started/onboarding-to-aws) if you are new to AWS and need to create an account
+4. An [Amazon EventBridge](https://aws.amazon.com/eventbridge/) EventBus ARN where the Macie job completion event will be sent and a rule/subscription to listen for that event. You can use the default EventBus for this or create a new one. See [lib/lambda/process-macie-job-status/README.md](source/lib/lambda/process-macie-job-status/README.md#eventbridge-event-structure) for event details. Create an Event rule to receive this event and use your application as the Target. You can also use CloudWatch logs as a target for this rule for testing. The Event pattern you can use for this rule is:
 
-**Example:**
-“These deployment instructions are optimized to best work on **<Amazon Linux 2 AMI>**.  Deployment in another OS may require additional steps.”
+ ```
+ {
+  "source": ["macie.job.status"]
+}
+ ```
 
-- Include install commands for packages, if applicable.
+5. An Amazon S3 bucket containing the objects that you want to scan
+6. Your application that invokes the API to kick-off the Amazon Macie Classification job. See **Usage Examples** in [source/API_USAGE.md](source/API_USAGE.md#usage-examples) for sample applications including command line tools that you can use for this
 
+### Operating System 
 
-### Third-party tools (If applicable)
+Can be deployed using Windows, Mac and Linux environments
 
-*List any installable third-party tools required for deployment.*
 
+### aws cdk bootstrap
 
-### AWS account requirements (If applicable)
+This Guidance uses aws-cdk. If you are using aws-cdk for first time, please follow the getting started guide to install AWS CDK and bootstrap your environment https://docs.aws.amazon.com/cdk/v2/guide/getting-started.html
 
-*List out pre-requisites required on the AWS account if applicable, this includes enabling AWS regions, requiring ACM certificate.*
 
-**Example:** “This deployment requires you have public ACM certificate available in your AWS account”
+## Deployment Steps
 
-**Example resources:**
-- ACM certificate 
-- DNS record
-- S3 bucket
-- VPC
-- IAM role with specific permissions
-- Enabling a Region or service etc.
+1. Clone the repo using command ```git clone git@github.com:aws-solutions-library-samples/guidance-for-sensitive-information-scanning-on-aws.git```
+2. cd to the repo folder ```cd guidance-for-sensitive-information-scanning-on-aws```
+3. Run the command to bootstrap CDK environment ```npx cdk bootstrap```
+4. Run the command to deploy the CDK environment ```npx cdk deploy```
 
 
-### aws cdk bootstrap (if sample code has aws-cdk)
+## Deployment Validation
 
-<If using aws-cdk, include steps for account bootstrap for new cdk users.>
+* Open CloudFormation console and verify the status of the stack with the name starting with SolutionsGuidanceMacieStack.
+* Once the deployment is successful, you should see 3 outputs in Console - MacieApiUrl, MacieApiId and MacieApiEndpointXXXX
 
-**Example blurb:** “This Guidance uses aws-cdk. If you are using aws-cdk for first time, please perform the below bootstrapping....”
 
-### Service limits  (if applicable)
+## Running the Guidance
 
-<Talk about any critical service limits that affect the regular functioning of the Guidance. If the Guidance requires service limit increase, include the service name, limit name and link to the service quotas page.>
+1. Call /create-job API to create a new job
+2. Get notified via EventBridge on job completion
+3. Call /get-findings API to get findings from the job
 
-### Supported Regions (if applicable)
+See **Usage Examples** in [source/API_USAGE.md](source/API_USAGE.md#usage-examples) for sample applications including command line tools that you can use for this. 
 
-<If the Guidance is built for specific AWS Regions, or if the services used in the Guidance do not support all Regions, please specify the Region this Guidance is best suited for>
+## Cleanup 
 
+Run ```npx cdk destroy``` to remove the stack that you deployed. Note that any Amazon S3 objects created by Amazon Macie will have to be manually cleaned up.
 
-## Deployment Steps (required)
 
-Deployment steps must be numbered, comprehensive, and usable to customers at any level of AWS expertise. The steps must include the precise commands to run, and describe the action it performs.
+## Notices 
 
-* All steps must be numbered.
-* If the step requires manual actions from the AWS console, include a screenshot if possible.
-* The steps must start with the following command to clone the repo. ```git clone xxxxxxx```
-* If applicable, provide instructions to create the Python virtual environment, and installing the packages using ```requirement.txt```.
-* If applicable, provide instructions to capture the deployed resource ARN or ID using the CLI command (recommended), or console action.
-
- 
-**Example:**
-
-1. Clone the repo using command ```git clone xxxxxxxxxx```
-2. cd to the repo folder ```cd <repo-name>```
-3. Install packages in requirements using command ```pip install requirement.txt```
-4. Edit content of **file-name** and replace **s3-bucket** with the bucket name in your account.
-5. Run this command to deploy the stack ```cdk deploy``` 
-6. Capture the domain name created by running this CLI command ```aws apigateway ............```
-
-
-
-## Deployment Validation  (required)
-
-<Provide steps to validate a successful deployment, such as terminal output, verifying that the resource is created, status of the CloudFormation template, etc.>
-
-
-**Examples:**
-
-* Open CloudFormation console and verify the status of the template with the name starting with xxxxxx.
-* If deployment is successful, you should see an active database instance with the name starting with <xxxxx> in        the RDS console.
-*  Run the following CLI command to validate the deployment: ```aws cloudformation describe xxxxxxxxxxxxx```
-
-
-
-## Running the Guidance (required)
-
-<Provide instructions to run the Guidance with the sample data or input provided, and interpret the output received.> 
-
-This section should include:
-
-* Guidance inputs
-* Commands to run
-* Expected output (provide screenshot if possible)
-* Output description
-
-
-
-## Next Steps (required)
-
-Provide suggestions and recommendations about how customers can modify the parameters and the components of the Guidance to further enhance it according to their requirements.
-
-
-## Cleanup (required)
-
-- Include detailed instructions, commands, and console actions to delete the deployed Guidance.
-- If the Guidance requires manual deletion of resources, such as the content of an S3 bucket, please specify.
-
-
-
-## FAQ, known issues, additional considerations, and limitations (optional)
-
-
-**Known issues (optional)**
-
-<If there are common known issues, or errors that can occur during the Guidance deployment, describe the issue and resolution steps here>
-
-
-**Additional considerations (if applicable)**
-
-<Include considerations the customer must know while using the Guidance, such as anti-patterns, or billing considerations.>
-
-**Examples:**
-
-- “This Guidance creates a public AWS bucket required for the use-case.”
-- “This Guidance created an Amazon SageMaker notebook that is billed per hour irrespective of usage.”
-- “This Guidance creates unauthenticated public API endpoints.”
-
-
-Provide a link to the *GitHub issues page* for users to provide feedback.
-
-
-**Example:** *“For any feedback, questions, or suggestions, please use the issues tab under this repo.”*
-
-## Revisions (optional)
-
-Document all notable changes to this project.
-
-Consider formatting this section based on Keep a Changelog, and adhering to Semantic Versioning.
-
-## Notices (optional)
-
-Include a legal disclaimer
-
-**Example:**
 *Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided “as is” without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*
 
 
-## Authors (optional)
+## Authors 
 
-Name of code contributors
+Kandha Sankarapandian Snr. Manager, AWS Specialist Prototyping
+
+Prashob Krishnan Principal TAM (US-FSI)

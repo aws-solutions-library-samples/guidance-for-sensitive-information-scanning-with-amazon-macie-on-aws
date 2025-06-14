@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DocumentDBCredentialsInSecretsManager = exports.DocumentDBClusterNonDefaultPort = exports.DocumentDBClusterLogExports = exports.DocumentDBClusterEncryptionAtRest = exports.DocumentDBClusterBackupRetentionPeriod = void 0;
+/*
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0
+*/
+var DocumentDBClusterBackupRetentionPeriod_1 = require("./DocumentDBClusterBackupRetentionPeriod");
+Object.defineProperty(exports, "DocumentDBClusterBackupRetentionPeriod", { enumerable: true, get: function () { return DocumentDBClusterBackupRetentionPeriod_1.default; } });
+var DocumentDBClusterEncryptionAtRest_1 = require("./DocumentDBClusterEncryptionAtRest");
+Object.defineProperty(exports, "DocumentDBClusterEncryptionAtRest", { enumerable: true, get: function () { return DocumentDBClusterEncryptionAtRest_1.default; } });
+var DocumentDBClusterLogExports_1 = require("./DocumentDBClusterLogExports");
+Object.defineProperty(exports, "DocumentDBClusterLogExports", { enumerable: true, get: function () { return DocumentDBClusterLogExports_1.default; } });
+var DocumentDBClusterNonDefaultPort_1 = require("./DocumentDBClusterNonDefaultPort");
+Object.defineProperty(exports, "DocumentDBClusterNonDefaultPort", { enumerable: true, get: function () { return DocumentDBClusterNonDefaultPort_1.default; } });
+var DocumentDBCredentialsInSecretsManager_1 = require("./DocumentDBCredentialsInSecretsManager");
+Object.defineProperty(exports, "DocumentDBCredentialsInSecretsManager", { enumerable: true, get: function () { return DocumentDBCredentialsInSecretsManager_1.default; } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvcnVsZXMvZG9jdW1lbnRkYi9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQTs7O0VBR0U7QUFDRixtR0FBNkc7QUFBcEcsZ0tBQUEsT0FBTyxPQUEwQztBQUMxRCx5RkFBbUc7QUFBMUYsc0pBQUEsT0FBTyxPQUFxQztBQUNyRCw2RUFBdUY7QUFBOUUsMElBQUEsT0FBTyxPQUErQjtBQUMvQyxxRkFBK0Y7QUFBdEYsa0pBQUEsT0FBTyxPQUFtQztBQUNuRCxpR0FBMkc7QUFBbEcsOEpBQUEsT0FBTyxPQUF5QyIsInNvdXJjZXNDb250ZW50IjpbIi8qXG5Db3B5cmlnaHQgQW1hem9uLmNvbSwgSW5jLiBvciBpdHMgYWZmaWxpYXRlcy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cblNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBBcGFjaGUtMi4wXG4qL1xuZXhwb3J0IHsgZGVmYXVsdCBhcyBEb2N1bWVudERCQ2x1c3RlckJhY2t1cFJldGVudGlvblBlcmlvZCB9IGZyb20gJy4vRG9jdW1lbnREQkNsdXN0ZXJCYWNrdXBSZXRlbnRpb25QZXJpb2QnO1xuZXhwb3J0IHsgZGVmYXVsdCBhcyBEb2N1bWVudERCQ2x1c3RlckVuY3J5cHRpb25BdFJlc3QgfSBmcm9tICcuL0RvY3VtZW50REJDbHVzdGVyRW5jcnlwdGlvbkF0UmVzdCc7XG5leHBvcnQgeyBkZWZhdWx0IGFzIERvY3VtZW50REJDbHVzdGVyTG9nRXhwb3J0cyB9IGZyb20gJy4vRG9jdW1lbnREQkNsdXN0ZXJMb2dFeHBvcnRzJztcbmV4cG9ydCB7IGRlZmF1bHQgYXMgRG9jdW1lbnREQkNsdXN0ZXJOb25EZWZhdWx0UG9ydCB9IGZyb20gJy4vRG9jdW1lbnREQkNsdXN0ZXJOb25EZWZhdWx0UG9ydCc7XG5leHBvcnQgeyBkZWZhdWx0IGFzIERvY3VtZW50REJDcmVkZW50aWFsc0luU2VjcmV0c01hbmFnZXIgfSBmcm9tICcuL0RvY3VtZW50REJDcmVkZW50aWFsc0luU2VjcmV0c01hbmFnZXInO1xuIl19

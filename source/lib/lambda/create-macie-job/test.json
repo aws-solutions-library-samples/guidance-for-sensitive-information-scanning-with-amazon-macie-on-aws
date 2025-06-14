@@ -1,0 +1,33 @@
+{
+  "jobType": "ONE_TIME",
+  "name": "test1",
+  "description": "Scan me",
+  "s3JobDefinition": {
+    "bucketDefinitions": [
+      {
+        "accountId": "741247265356",
+        "buckets": ["macie-job-kp-results"]
+      }
+    ],
+    "scoping": {
+      "includes": {
+        "and": [
+          {
+            "simpleScopeTerm": {
+              "comparator": "EQ",
+              "key": "OBJECT_EXTENSION",
+              "values": ["txt", "csv", "json"]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "samplingPercentage": 100,
+  "managedDataIdentifierSelector": "ALL",
+  "tags": {
+    "JobStatusEventBusArn": "arn:aws:events:us-east-1:741247265356:event-bus/default",
+    "Environment": "Production",
+    "Team": "Security"
+  }
+}

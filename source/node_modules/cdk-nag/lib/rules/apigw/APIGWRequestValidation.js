@@ -1,0 +1,48 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/*
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0
+*/
+const path_1 = require("path");
+const aws_cdk_lib_1 = require("aws-cdk-lib");
+const aws_apigateway_1 = require("aws-cdk-lib/aws-apigateway");
+const nag_rules_1 = require("../../nag-rules");
+/**
+ * Rest APIs have request validation enabled
+ * @param node the CfnResource to check
+ */
+exports.default = Object.defineProperty((node) => {
+    if (node instanceof aws_apigateway_1.CfnRestApi) {
+        const apiLogicalId = nag_rules_1.NagRules.resolveResourceFromIntrinsic(node, node.ref);
+        let found = false;
+        for (const child of aws_cdk_lib_1.Stack.of(node).node.findAll()) {
+            if (child instanceof aws_apigateway_1.CfnRequestValidator) {
+                if (isMatchingRequestValidator(child, apiLogicalId)) {
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found) {
+            return nag_rules_1.NagRuleCompliance.NON_COMPLIANT;
+        }
+        return nag_rules_1.NagRuleCompliance.COMPLIANT;
+    }
+    else {
+        return nag_rules_1.NagRuleCompliance.NOT_APPLICABLE;
+    }
+}, 'name', { value: (0, path_1.parse)(__filename).name });
+/**
+ * Check whether a given Request Validator has basic validation enabled and is associated with the given Rest API
+ * @param node the CfnRequestValidator to check
+ * @param apiLogicalId the Cfn Logical ID of the REST API
+ * returns whether the CfnRequestValidator is associated with the given Rest API
+ */
+function isMatchingRequestValidator(node, apiLogicalId) {
+    const resourceLogicalId = nag_rules_1.NagRules.resolveResourceFromIntrinsic(node, node.restApiId);
+    return (resourceLogicalId === apiLogicalId &&
+        aws_cdk_lib_1.Stack.of(node).resolve(node.validateRequestBody) === true &&
+        aws_cdk_lib_1.Stack.of(node).resolve(node.validateRequestParameters) === true);
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQVBJR1dSZXF1ZXN0VmFsaWRhdGlvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9ydWxlcy9hcGlndy9BUElHV1JlcXVlc3RWYWxpZGF0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUE7OztFQUdFO0FBQ0YsK0JBQTZCO0FBQzdCLDZDQUFpRDtBQUNqRCwrREFBNkU7QUFDN0UsK0NBQThEO0FBRTlEOzs7R0FHRztBQUNILGtCQUFlLE1BQU0sQ0FBQyxjQUFjLENBQ2xDLENBQUMsSUFBaUIsRUFBcUIsRUFBRTtJQUN2QyxJQUFJLElBQUksWUFBWSwyQkFBVSxFQUFFLENBQUM7UUFDL0IsTUFBTSxZQUFZLEdBQUcsb0JBQVEsQ0FBQyw0QkFBNEIsQ0FDeEQsSUFBSSxFQUNKLElBQUksQ0FBQyxHQUFHLENBQ1QsQ0FBQztRQUNGLElBQUksS0FBSyxHQUFHLEtBQUssQ0FBQztRQUNsQixLQUFLLE1BQU0sS0FBSyxJQUFJLG1CQUFLLENBQUMsRUFBRSxDQUFDLElBQUksQ0FBQyxDQUFDLElBQUksQ0FBQyxPQUFPLEVBQUUsRUFBRSxDQUFDO1lBQ2xELElBQUksS0FBSyxZQUFZLG9DQUFtQixFQUFFLENBQUM7Z0JBQ3pDLElBQUksMEJBQTBCLENBQUMsS0FBSyxFQUFFLFlBQVksQ0FBQyxFQUFFLENBQUM7b0JBQ3BELEtBQUssR0FBRyxJQUFJLENBQUM7b0JBQ2IsTUFBTTtnQkFDUixDQUFDO1lBQ0gsQ0FBQztRQUNILENBQUM7UUFDRCxJQUFJLENBQUMsS0FBSyxFQUFFLENBQUM7WUFDWCxPQUFPLDZCQUFpQixDQUFDLGFBQWEsQ0FBQztRQUN6QyxDQUFDO1FBQ0QsT0FBTyw2QkFBaUIsQ0FBQyxTQUFTLENBQUM7SUFDckMsQ0FBQztTQUFNLENBQUM7UUFDTixPQUFPLDZCQUFpQixDQUFDLGNBQWMsQ0FBQztJQUMxQyxDQUFDO0FBQ0gsQ0FBQyxFQUNELE1BQU0sRUFDTixFQUFFLEtBQUssRUFBRSxJQUFBLFlBQUssRUFBQyxVQUFVLENBQUMsQ0FBQyxJQUFJLEVBQUUsQ0FDbEMsQ0FBQztBQUVGOzs7OztHQUtHO0FBQ0gsU0FBUywwQkFBMEIsQ0FDakMsSUFBeUIsRUFDekIsWUFBb0I7SUFFcEIsTUFBTSxpQkFBaUIsR0FBRyxvQkFBUSxDQUFDLDRCQUE0QixDQUM3RCxJQUFJLEVBQ0osSUFBSSxDQUFDLFNBQVMsQ0FDZixDQUFDO0lBQ0YsT0FBTyxDQUNMLGlCQUFpQixLQUFLLFlBQVk7UUFDbEMsbUJBQUssQ0FBQyxFQUFFLENBQUMsSUFBSSxDQUFDLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxtQkFBbUIsQ0FBQyxLQUFLLElBQUk7UUFDekQsbUJBQUssQ0FBQyxFQUFFLENBQUMsSUFBSSxDQUFDLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyx5QkFBeUIsQ0FBQyxLQUFLLElBQUksQ0FDaEUsQ0FBQztBQUNKLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuQ29weXJpZ2h0IEFtYXpvbi5jb20sIEluYy4gb3IgaXRzIGFmZmlsaWF0ZXMuIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXG5TUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogQXBhY2hlLTIuMFxuKi9cbmltcG9ydCB7IHBhcnNlIH0gZnJvbSAncGF0aCc7XG5pbXBvcnQgeyBDZm5SZXNvdXJjZSwgU3RhY2sgfSBmcm9tICdhd3MtY2RrLWxpYic7XG5pbXBvcnQgeyBDZm5SZXF1ZXN0VmFsaWRhdG9yLCBDZm5SZXN0QXBpIH0gZnJvbSAnYXdzLWNkay1saWIvYXdzLWFwaWdhdGV3YXknO1xuaW1wb3J0IHsgTmFnUnVsZUNvbXBsaWFuY2UsIE5hZ1J1bGVzIH0gZnJvbSAnLi4vLi4vbmFnLXJ1bGVzJztcblxuLyoqXG4gKiBSZXN0IEFQSXMgaGF2ZSByZXF1ZXN0IHZhbGlkYXRpb24gZW5hYmxlZFxuICogQHBhcmFtIG5vZGUgdGhlIENmblJlc291cmNlIHRvIGNoZWNrXG4gKi9cbmV4cG9ydCBkZWZhdWx0IE9iamVjdC5kZWZpbmVQcm9wZXJ0eShcbiAgKG5vZGU6IENmblJlc291cmNlKTogTmFnUnVsZUNvbXBsaWFuY2UgPT4ge1xuICAgIGlmIChub2RlIGluc3RhbmNlb2YgQ2ZuUmVzdEFwaSkge1xuICAgICAgY29uc3QgYXBpTG9naWNhbElkID0gTmFnUnVsZXMucmVzb2x2ZVJlc291cmNlRnJvbUludHJpbnNpYyhcbiAgICAgICAgbm9kZSxcbiAgICAgICAgbm9kZS5yZWZcbiAgICAgICk7XG4gICAgICBsZXQgZm91bmQgPSBmYWxzZTtcbiAgICAgIGZvciAoY29uc3QgY2hpbGQgb2YgU3RhY2sub2Yobm9kZSkubm9kZS5maW5kQWxsKCkpIHtcbiAgICAgICAgaWYgKGNoaWxkIGluc3RhbmNlb2YgQ2ZuUmVxdWVzdFZhbGlkYXRvcikge1xuICAgICAgICAgIGlmIChpc01hdGNoaW5nUmVxdWVzdFZhbGlkYXRvcihjaGlsZCwgYXBpTG9naWNhbElkKSkge1xuICAgICAgICAgICAgZm91bmQgPSB0cnVlO1xuICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG4gICAgICBpZiAoIWZvdW5kKSB7XG4gICAgICAgIHJldHVybiBOYWdSdWxlQ29tcGxpYW5jZS5OT05fQ09NUExJQU5UO1xuICAgICAgfVxuICAgICAgcmV0dXJuIE5hZ1J1bGVDb21wbGlhbmNlLkNPTVBMSUFOVDtcbiAgICB9IGVsc2Uge1xuICAgICAgcmV0dXJuIE5hZ1J1bGVDb21wbGlhbmNlLk5PVF9BUFBMSUNBQkxFO1xuICAgIH1cbiAgfSxcbiAgJ25hbWUnLFxuICB7IHZhbHVlOiBwYXJzZShfX2ZpbGVuYW1lKS5uYW1lIH1cbik7XG5cbi8qKlxuICogQ2hlY2sgd2hldGhlciBhIGdpdmVuIFJlcXVlc3QgVmFsaWRhdG9yIGhhcyBiYXNpYyB2YWxpZGF0aW9uIGVuYWJsZWQgYW5kIGlzIGFzc29jaWF0ZWQgd2l0aCB0aGUgZ2l2ZW4gUmVzdCBBUElcbiAqIEBwYXJhbSBub2RlIHRoZSBDZm5SZXF1ZXN0VmFsaWRhdG9yIHRvIGNoZWNrXG4gKiBAcGFyYW0gYXBpTG9naWNhbElkIHRoZSBDZm4gTG9naWNhbCBJRCBvZiB0aGUgUkVTVCBBUElcbiAqIHJldHVybnMgd2hldGhlciB0aGUgQ2ZuUmVxdWVzdFZhbGlkYXRvciBpcyBhc3NvY2lhdGVkIHdpdGggdGhlIGdpdmVuIFJlc3QgQVBJXG4gKi9cbmZ1bmN0aW9uIGlzTWF0Y2hpbmdSZXF1ZXN0VmFsaWRhdG9yKFxuICBub2RlOiBDZm5SZXF1ZXN0VmFsaWRhdG9yLFxuICBhcGlMb2dpY2FsSWQ6IHN0cmluZ1xuKTogYm9vbGVhbiB7XG4gIGNvbnN0IHJlc291cmNlTG9naWNhbElkID0gTmFnUnVsZXMucmVzb2x2ZVJlc291cmNlRnJvbUludHJpbnNpYyhcbiAgICBub2RlLFxuICAgIG5vZGUucmVzdEFwaUlkXG4gICk7XG4gIHJldHVybiAoXG4gICAgcmVzb3VyY2VMb2dpY2FsSWQgPT09IGFwaUxvZ2ljYWxJZCAmJlxuICAgIFN0YWNrLm9mKG5vZGUpLnJlc29sdmUobm9kZS52YWxpZGF0ZVJlcXVlc3RCb2R5KSA9PT0gdHJ1ZSAmJlxuICAgIFN0YWNrLm9mKG5vZGUpLnJlc29sdmUobm9kZS52YWxpZGF0ZVJlcXVlc3RQYXJhbWV0ZXJzKSA9PT0gdHJ1ZVxuICApO1xufVxuIl19
