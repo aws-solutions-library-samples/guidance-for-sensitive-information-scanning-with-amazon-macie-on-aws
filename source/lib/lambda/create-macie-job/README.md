@@ -92,13 +92,13 @@ The Lambda function accepts parameters matching the `CreateClassificationJobComm
   "s3JobDefinition": {
     "bucketDefinitions": [
       {
-        "accountId": "123456789012",
+        "accountId": "AWS_ACCOUNT_ID",
         "buckets": ["my-bucket"]
       }
     ]
   },
   "tags": {
-    "JobStatusEventBusArn": "arn:aws:events:us-east-1:123456789012:event-bus/macie-job-status"
+    "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/macie-job-status"
   }
 }
 ```
@@ -112,7 +112,7 @@ The Lambda function accepts parameters matching the `CreateClassificationJobComm
   "s3JobDefinition": {
     "bucketDefinitions": [
       {
-        "accountId": "123456789012",
+        "accountId": "AWS_ACCOUNT_ID",
         "buckets": ["customer-data-bucket", "user-uploads-bucket"]
       }
     ],
@@ -133,7 +133,7 @@ The Lambda function accepts parameters matching the `CreateClassificationJobComm
   "samplingPercentage": 100,
   "managedDataIdentifierSelector": "ALL",
   "tags": {
-    "JobStatusEventBusArn": "arn:aws:events:us-east-1:123456789012:event-bus/macie-job-status",
+    "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/macie-job-status",
     "Environment": "Production",
     "Team": "Security"
   }

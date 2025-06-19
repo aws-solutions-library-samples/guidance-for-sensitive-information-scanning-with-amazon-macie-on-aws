@@ -53,7 +53,7 @@ The function expects EventBridge events with this structure:
   "id": "event-id",
   "detail-type": "Macie Job Status Change",
   "source": "macie.job.status",
-  "account": "123456789012",
+  "account": "AWS_ACCOUNT_ID",
   "time": "2023-12-01T10:00:00Z",
   "region": "us-east-1",
   "detail": {
@@ -62,7 +62,7 @@ The function expects EventBridge events with this structure:
     "jobName": "my-classification-job",
     "eventCategory": "completion",
     "jobDetails": {
-      "jobArn": "arn:aws:macie2:us-east-1:123456789012:classification-job/abc123",
+      "jobArn": "arn:aws:macie2:AWS_REGION:AWS_ACCOUNT_ID:classification-job/abc123",
       "name": "my-classification-job",
       "tags": {...}
     }
@@ -78,13 +78,13 @@ The function expects EventBridge events with this structure:
   "success": true,
   "data": {
     "jobId": "abc123...",
-    "jobArn": "arn:aws:macie2:us-east-1:123456789012:classification-job/abc123",
+    "jobArn": "arn:aws:macie2:AWS_REGION:AWS_ACCOUNT_ID:classification-job/abc123",
     "jobName": "my-classification-job",
     "totalFindings": 42,
     "findings": [
       {
         "id": "finding-id-1",
-        "accountId": "123456789012",
+        "accountId": "AWS_ACCOUNT_ID",
         "category": "PII",
         "severity": {
           "description": "High",

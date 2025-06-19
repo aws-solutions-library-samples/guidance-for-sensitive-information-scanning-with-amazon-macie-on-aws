@@ -58,24 +58,24 @@ Published events have the following structure:
     // Original CloudWatch log data
     "eventType": "JOB_COMPLETED",
     "jobId": "abc123...",
-    "adminAccountId": "123456789012",
+    "adminAccountId": "AWS_ACCOUNT_ID",
     "occuredAt": "2023-12-01T10:00:00Z",
     "description": "Job completed successfully",
     "jobName": "my-classification-job",
-    "affectedAccount": "123456789012",
+    "affectedAccount": "AWS_ACCOUNT_ID",
     "affectedResource": {...},
     "operation": "...",
     "runDate": "2023-12-01",
     
     // Enriched job details from Macie API
     "jobDetails": {
-      "jobArn": "arn:aws:macie2:us-east-1:123456789012:classification-job/abc123",
+      "jobArn": "arn:aws:macie2:AWS_REGION:AWS_ACCOUNT_ID:classification-job/abc123",
       "name": "my-classification-job",
       "description": "Scan for PII data",
       "s3JobDefinition": {...},
       "statistics": {...},
       "tags": {
-        "JobStatusEventBusArn": "arn:aws:events:us-east-1:123456789012:event-bus/my-bus"
+        "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/my-bus"
       }
     },
     
@@ -159,7 +159,7 @@ All operations are logged with structured JSON:
   "message": "Successfully published event to EventBridge",
   "data": {
     "jobId": "abc123",
-    "eventBusArn": "arn:aws:events:us-east-1:123456789012:event-bus/my-bus",
+    "eventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/my-bus",
     "eventId": "def456"
   }
 }

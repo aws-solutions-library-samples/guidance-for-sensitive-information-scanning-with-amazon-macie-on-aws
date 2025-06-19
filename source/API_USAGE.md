@@ -40,13 +40,13 @@ The API accepts the same request format as the underlying Lambda function:
   "s3JobDefinition": {
     "bucketDefinitions": [
       {
-        "accountId": "123456789012",
+        "accountId": "AWS_ACCOUNT_ID",
         "buckets": ["my-bucket-name"]
       }
     ]
   },
   "tags": {
-    "JobStatusEventBusArn": "arn:aws:events:us-east-1:123456789012:event-bus/my-event-bus"
+    "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/my-event-bus"
   }
 }
 ```
@@ -70,7 +70,7 @@ The API accepts the same request format as the underlying Lambda function:
   "success": true,
   "data": {
     "jobId": "job-12345678-1234-1234-1234-123456789012",
-    "jobArn": "arn:aws:macie2:us-east-1:123456789012:classification-job/job-12345678-1234-1234-1234-123456789012",
+    "jobArn": "arn:aws:macie2:AWS_REGION:AWS_ACCOUNT_ID:classification-job/job-12345678-1234-1234-1234-123456789012",
     "requestId": "12345678-1234-1234-1234-123456789012"
   }
 }
@@ -145,11 +145,11 @@ GET /v1/get-findings?jobId=abc123def456&maxResults=25&nextToken=eyJhbGciOiJIUzI1
     "findings": [
       {
         "id": "finding-id-1",
-        "accountId": "123456789012",
+        "accountId": "AWS_ACCOUNT_ID",
         "archived": false,
         "category": "CLASSIFICATION",
         "classificationDetails": {
-          "jobArn": "arn:aws:macie2:us-east-1:123456789012:classification-job/abc123def456",
+          "jobArn": "arn:aws:macie2:AWS_REGION:AWS_ACCOUNT_ID:classification-job/abc123def456",
           "jobId": "abc123def456",
           "result": {
             "status": {
@@ -264,29 +264,29 @@ pip install awscurl
 ##### Create Job
 ```bash
 # Replace YOUR_API_ID with your actual API Gateway ID
-# Replace us-west-2 with your AWS region
+# Replace AWS_REGION with your AWS region
 # Note: Additional headers are required to bypass WAF Bot Control protection
 awscurl --service execute-api \
-  --region us-west-2 \
+  --region AWS_REGION \
   -X POST \
   -H "Content-Type: application/json" \
   -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
   -H "Accept: application/json, text/plain, */*" \
   -H "Accept-Language: en-US,en;q=0.9" \
   -d @create-job-request.json \
-  "https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1/create-job"
+  "https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/create-job"
 ```
 
 ##### Get Findings
 ```bash
 # Note: Additional headers are required to bypass WAF Bot Control protection
 awscurl --service execute-api \
-  --region us-west-2 \
+  --region AWS_REGION \
   -X GET \
   -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
   -H "Accept: application/json, text/plain, */*" \
   -H "Accept-Language: en-US,en;q=0.9" \
-  "https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1/get-findings?jobId=YOUR_JOB_ID"
+  "https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/get-findings?jobId=YOUR_JOB_ID"
 ```
 
 #### Option 2: Using aws-api-gateway-cli-test
@@ -305,7 +305,7 @@ export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
 apig-test \
   --username $AWS_ACCESS_KEY_ID \
   --password $AWS_SECRET_ACCESS_KEY \
-  --invoke-url https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1 \
+  --invoke-url https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1 \
   --method POST \
   --path /create-job \
   --body @create-job-request.json
@@ -316,7 +316,7 @@ apig-test \
 apig-test \
   --username $AWS_ACCESS_KEY_ID \
   --password $AWS_SECRET_ACCESS_KEY \
-  --invoke-url https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1 \
+  --invoke-url https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1 \
   --method GET \
   --path "/get-findings?jobId=YOUR_JOB_ID"
 ```
@@ -330,7 +330,7 @@ Create a script to sign requests with AWS SigV4. Here's a bash script example:
 # save as: call-api.sh
 
 API_ID="YOUR_API_ID"
-REGION="us-west-2"
+REGION="AWS_REGION"
 SERVICE="execute-api"
 ENDPOINT="https://${API_ID}.execute-api.${REGION}.amazonaws.com/v1"
 
@@ -454,13 +454,13 @@ Before using any of these methods, ensure you have:
      "s3JobDefinition": {
        "bucketDefinitions": [
          {
-           "accountId": "123456789012",
+           "accountId": "AWS_ACCOUNT_ID",
            "buckets": ["my-test-bucket"]
          }
        ]
      },
      "tags": {
-       "JobStatusEventBusArn": "arn:aws:events:us-west-2:123456789012:event-bus/default"
+       "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/default"
      }
    }
    ```
@@ -468,19 +468,19 @@ Before using any of these methods, ensure you have:
 3. **Create the job**:
    ```bash
    awscurl --service execute-api \
-     --region us-west-2 \
+     --region AWS_REGION \
      -X POST \
      -H "Content-Type: application/json" \
      -d @create-job-request.json \
-     "https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1/create-job"
+     "https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/create-job"
    ```
 
 4. **Get the job ID** from the response and use it to retrieve findings:
    ```bash
    awscurl --service execute-api \
-     --region us-west-2 \
+     --region AWS_REGION \
      -X GET \
-     "https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1/get-findings?jobId=YOUR_JOB_ID"
+     "https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/get-findings?jobId=YOUR_JOB_ID"
    ```
 
 ### Using AWS SDK for JavaScript/Node.js
@@ -490,23 +490,23 @@ Before using any of these methods, ensure you have:
 import { APIGatewayClient, InvokeCommand } from '@aws-sdk/client-api-gateway';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
 
-const client = new APIGatewayClient({ region: 'us-east-1' });
+const client = new APIGatewayClient();
 
 const request = {
   name: 'My Macie Classification Job',
   jobType: 'ONE_TIME',
   s3JobDefinition: {
     bucketDefinitions: [{
-      accountId: '123456789012',
+      accountId: 'AWS_ACCOUNT_ID',
       buckets: ['my-bucket-name']
     }]
   },
   tags: {
-    JobStatusEventBusArn: 'arn:aws:events:us-east-1:123456789012:event-bus/my-event-bus'
+    JobStatusEventBusArn: 'arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/my-event-bus'
   }
 };
 
-const response = await fetch('https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/v1/create-job', {
+const response = await fetch('https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/create-job', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -521,7 +521,7 @@ console.log(result);
 
 #### Get Findings
 ```javascript
-const findingsResponse = await fetch('https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/v1/get-findings?jobId=abc123def456&maxResults=25', {
+const findingsResponse = await fetch('https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/get-findings?jobId=abc123def456&maxResults=25', {
   method: 'GET',
   headers: {
     // AWS SigV4 headers will be added automatically by AWS SDK
@@ -543,18 +543,18 @@ from botocore.auth import SigV4Auth
 from botocore.awsrequest import AWSRequest
 
 # Create the request
-url = 'https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/v1/create-job'
+url = 'https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/create-job'
 data = {
     'name': 'My Macie Classification Job',
     'jobType': 'ONE_TIME',
     's3JobDefinition': {
         'bucketDefinitions': [{
-            'accountId': '123456789012',
+            'accountId': 'AWS_ACCOUNT_ID',
             'buckets': ['my-bucket-name']
         }]
     },
     'tags': {
-        'JobStatusEventBusArn': 'arn:aws:events:us-east-1:123456789012:event-bus/my-event-bus'
+        'JobStatusEventBusArn': 'arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/my-event-bus'
     }
 }
 
@@ -562,7 +562,7 @@ data = {
 session = boto3.Session()
 credentials = session.get_credentials()
 request = AWSRequest(method='POST', url=url, data=json.dumps(data))
-SigV4Auth(credentials, 'execute-api', 'us-east-1').add_auth(request)
+SigV4Auth(credentials, 'execute-api', 'AWS_REGION').add_auth(request)
 
 # Send the request
 response = requests.post(url, data=request.body, headers=dict(request.headers))
@@ -572,9 +572,9 @@ print(response.json())
 #### Get Findings
 ```python
 # Get findings
-findings_url = 'https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/v1/get-findings?jobId=abc123def456'
+findings_url = 'https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/get-findings?jobId=abc123def456'
 findings_request = AWSRequest(method='GET', url=findings_url)
-SigV4Auth(credentials, 'execute-api', 'us-east-1').add_auth(findings_request)
+SigV4Auth(credentials, 'execute-api', 'AWS_REGION').add_auth(findings_request)
 
 findings_response = requests.get(findings_url, headers=dict(findings_request.headers))
 print(findings_response.json())
@@ -601,7 +601,7 @@ To call the APIs, users/roles need the following IAM policy:
 ```
 
 Replace:
-- `REGION`: Your AWS region (e.g., us-east-1)
+- `REGION`: Your AWS region (e.g., AWS_REGION)
 - `ACCOUNT`: Your AWS account ID
 - `API_ID`: Your API Gateway ID (available in stack outputs)
 
@@ -642,14 +642,14 @@ Include browser-like headers to bypass bot detection:
 ```bash
 # For awscurl
 awscurl --service execute-api \
-  --region us-west-2 \
+  --region AWS_REGION \
   -X POST \
   -H "Content-Type: application/json" \
   -H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
   -H "Accept: application/json, text/plain, */*" \
   -H "Accept-Language: en-US,en;q=0.9" \
   -d @create-job-request.json \
-  "https://YOUR_API_ID.execute-api.us-west-2.amazonaws.com/v1/create-job"
+  "https://YOUR_API_ID.execute-api.AWS_REGION.amazonaws.com/v1/create-job"
 ```
 
 #### Solution 2: Use SDK Instead of CLI Tools
@@ -682,12 +682,12 @@ If headers don't work, check WAF logs to see which rule is blocking:
 aws cloudwatch get-metric-statistics \
   --namespace AWS/WAFV2 \
   --metric-name BlockedRequests \
-  --dimensions Name=WebACL,Value=MacieApiWebACL Name=Region,Value=us-west-2 \
+  --dimensions Name=WebACL,Value=MacieApiWebACL Name=Region,Value=AWS_REGION \
   --start-time $(date -d '1 hour ago' -u +%Y-%m-%dT%H:%M:%S) \
   --end-time $(date -u +%Y-%m-%dT%H:%M:%S) \
   --period 300 \
   --statistics Sum \
-  --region us-west-2
+  --region AWS_REGION
 ```
 
 ### Debug Steps
