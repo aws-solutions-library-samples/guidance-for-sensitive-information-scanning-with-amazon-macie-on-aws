@@ -18,7 +18,7 @@ This sample code demonstrates how customer applications can scan artifacts for P
 
 ## Overview 
 
-This guidance  provides organizations with an automated, enterprise-grade solution for discovering and protecting sensitive data across their AWS environment. While Amazon Macie offers powerful built-in capabilities for sensitive data discovery, organizations often need a more integrated, automated, and customizable approach to manage their data security at scale.
+This guidance  provides organizations with an automated solution for discovering and protecting sensitive data across their AWS environment. While Amazon Macie offers powerful built-in capabilities for sensitive data discovery, organizations often need a more integrated, automated, and customizable approach to manage their data security at scale.
 
 This guidance enables security teams and developers to:
 
