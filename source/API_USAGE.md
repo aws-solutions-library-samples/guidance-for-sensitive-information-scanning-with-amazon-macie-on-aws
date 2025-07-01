@@ -265,6 +265,7 @@ pip install awscurl
 ```bash
 # Replace YOUR_API_ID with your actual API Gateway ID
 # Replace AWS_REGION with your AWS region
+# create a file create-job-request.json with all the parameters as shown in the  Request Format example of #1.Create Classification Job API 
 # Note: Additional headers are required to bypass WAF Bot Control protection
 awscurl --service execute-api \
   --region AWS_REGION \

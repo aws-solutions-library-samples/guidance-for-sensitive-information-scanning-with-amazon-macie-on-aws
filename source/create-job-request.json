@@ -1,0 +1,15 @@
+{
+  "name": "My Macie Classification Job",
+  "jobType": "ONE_TIME",
+  "s3JobDefinition": {
+    "bucketDefinitions": [
+      {
+        "accountId": "741247265356",
+        "buckets": ["macie-job-kp-results"]
+      }
+    ]
+  },
+  "tags": {
+    "JobStatusEventBusArn": "arn:aws:events:us-east-1:741247265356:event-bus/default"
+  }
+}
