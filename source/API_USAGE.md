@@ -41,12 +41,12 @@ The API accepts the same request format as the underlying Lambda function:
     "bucketDefinitions": [
       {
         "accountId": "AWS_ACCOUNT_ID",
-        "buckets": ["my-bucket-name"]
+        "buckets": ["REPLACE-BUCKET-NAME"]
       }
     ]
   },
   "tags": {
-    "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/my-event-bus"
+    "JobStatusEventBusArn": "arn:aws:events:AWS_REGION:AWS_ACCOUNT_ID:event-bus/REPLACE-WITH-MY-EVENT-BUS-NAME"
   }
 }
 ```
