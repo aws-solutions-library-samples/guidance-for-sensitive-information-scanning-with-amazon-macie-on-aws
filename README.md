@@ -82,7 +82,7 @@ This Guidance uses aws-cdk. If you are using aws-cdk for first time, please foll
 ## Deployment Steps
 
 1. Clone the repo using command ```git clone git@github.com:aws-solutions-library-samples/guidance-for-sensitive-information-scanning-on-aws.git```
-2. cd to the repo folder ```cd guidance-for-sensitive-information-scanning-on-aws```
+2. cd to the repo source folder ```cd guidance-for-sensitive-information-scanning-on-aws/source```
 3. Run the command to bootstrap CDK environment ```npx cdk bootstrap```
 4. Run the command to deploy the CDK environment ```npx cdk deploy```
 
